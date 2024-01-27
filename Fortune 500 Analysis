@@ -1,0 +1,31 @@
+--Statement to show which company has the most revenue fromst most to least
+SELECT company_name, revenue
+FROM fortune_companies
+ORDER BY revenue desc;
+
+--Statement to show the SUM revenue of Technology industries 
+SELECT industry, SUM(revenue) AS total_revenue
+FROM fortune_companies
+WHERE industry = "Technology";
+
+--Statement to show how many companies are a part of a certain indutry greater than 6
+SELECT industry, COUNT(company_id)  
+FROM fortune_companies
+GROUP BY industry
+HAVING COUNT(company_id) > 6;
+
+--Statement to categorize the companies by the amount of maternity leave one gets
+SELECT company_name, maternity_leave_weeks, 
+		CASE WHEN maternity_leave_weeks >= 12 THEN "Mother Friendly Workplace"
+        WHEN maternity_leave_weeks >= 8 THEN "Acceptable Workplace"
+        ELSE "Not Mother Oriented" END AS mother_factor
+FROM fortune_companies
+GROUP BY maternity_leave_weeks 
+ORDER BY maternity_leave_weeks desc;
+
+--Statment showing which companies provide more than 15 days of PTO and also have healthcare
+SELECT company_name, paid_time_off_days
+FROM fortune_companies
+WHERE paid_time_off_days >= 15
+AND healthcare_benefits = 1
+ORDER BY paid_time_off_days desc;
